@@ -17,17 +17,22 @@ function welcomeNewUser() {
 
 
 
-
-
 // Speech to text
 
-let final_transcript = '';
+// Configure the webkitSpeechRecognition
 let recognizing = false;
-
 let recognition = new webkitSpeechRecognition();
 recognition.lang = "fr-FR";
 recognition.continuous = true;
 recognition.interimResults = true;
+
+// What I do is :
+// - Here I listen to the speech
+// - When I have enough words (10), I stop the recognition and put those words into the sentence variable
+// - I send sentence to the server
+// - The server analyze that sentence, change the current score, and add the sentence to a file
+// - The server send the score back to the client
+// - I update the variable on the interface
 
 if ('webkitSpeechRecognition' in window) {
 
@@ -37,12 +42,24 @@ if ('webkitSpeechRecognition' in window) {
         recognizing = true;
     };
 
-    // quand un mot est reconnu, on récupère sa valeur
+    // each time it recognizes a new word
     recognition.onresult = (event) => {
-        // console.log(event);
-        let last = event.results.length-1;
-        let foundWords = event.results[last][0].transcript;
-        console.log(foundWords);
+
+        let sentence = '';
+
+        // we go into the results in order to have the whole sentence
+        for (let i=0; i<event.results.length; i++) {
+            sentence+=event.results[i][0].transcript + ' ';
+        }
+
+        console.log(sentence);
+
+        // when we have 10 words, we send it to the server and restart the recording
+        if ((sentence.split(' ')).length > 10) {
+            socket.emit('newSentence', {sentence: sentence}); // on envoie un message de type 'newsentence, avec la sentence en contenu
+            restartRecording();
+        }
+
 
     };
 
@@ -50,17 +67,16 @@ if ('webkitSpeechRecognition' in window) {
     recognition.onend = () => {
         // recognizing = true;
         console.log("je me suis arrêté");
-        startRecording(event);
+        restartRecording(event);
     };
 
 }
 
-function startRecording(event) {
+
+function restartRecording(event) {
 
     console.log('start recording');
-    console.log(event);
     recognition.stop();
-    final_transcript = '';
     recognition.start();
 
 }

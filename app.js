@@ -19,6 +19,16 @@ app.use(express.static('public')); // quand l'user va sur le site il va voir ce 
 
 
 io.sockets.on('connection', newConnection);
+io.sockets.on('newSentence', updateTheScore);
+
+function updateTheScore() {
+
+    // find the the score of that sentence
+    // add it to the total score
+    // add the sentence to a file
+    // send the score to the client
+
+}
 
 function newConnection(socket) {
     console.log(socket);
