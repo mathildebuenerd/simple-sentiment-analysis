@@ -1,0 +1,32 @@
+{
+  "name": "sentiment-analysis",
+  "version": "1.0.0",
+  "description": "\"Simple sentiment analysis on speech to text, using AFINN word list\"",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mathildebuenerd/simple-sentiment-analysis.git"
+  },
+  "keywords": [
+    "sentiment",
+    "analysis",
+    "afinn",
+    "personal",
+    "assistant"
+  ],
+  "author": "mathilde buenerd",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mathildebuenerd/simple-sentiment-analysis/issues"
+  },
+  "homepage": "https://github.com/mathildebuenerd/simple-sentiment-analysis#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "nodemon": "^1.15.0",
+    "sentiment": "^4.2.0",
+    "sentiment-multilang": "0.0.2"
+  }
+}
