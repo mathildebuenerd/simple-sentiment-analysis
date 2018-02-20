@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Sentiment analysis</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
-<body onload="startRecording(event)">
+<body onload="restartRecording(event)">
 
 <header>
     <p>Tableau de bord de <span id="username"></span></p>
 </header>
 
 <section id="stats">
-    <p id="score"></p>
+    <p>Score:<span id="score"></span></p>
+    <p>Vote:<span id="vote"></span></p>
+    <p>Mots positifs:<span id="positive"></span></p>
+    <p>Mots négatifs:<span id="negative"></span></p>
 </section>
 
 

@@ -1,0 +1,4 @@
+#positive, #negative {
+    display: flex;
+    flex-direction: column;
+}

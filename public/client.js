@@ -7,6 +7,38 @@ let socket = io();
 let userInfos = '';
 
 socket.on('new-connection', welcomeNewUser);
+socket.on('score', displayScore);
+
+function displayScore(data) {
+    console.log(data);
+    let scoreBlock = document.querySelector('#score');
+    let voteBlock = document.querySelector('#vote');
+    let positiveWords = document.querySelector('#positive');
+    let negativeWords = document.querySelector('#negative');
+
+    // Display the score
+    scoreBlock.textContent = data.score;
+
+    // Display the vote
+    voteBlock.textContent = data.vote;
+
+    // Display the positive words
+    for (let i=0; i<data.positive.length; i++) {
+        positiveWords.innerHTML = "";
+        let singleWord = document.createElement('span');
+        singleWord.textContent += data.positive[i];
+        positiveWords.appendChild(singleWord);
+    }
+
+    // Display the negative words
+    for (let i=0; i<data.negative.length; i++) {
+        negativeWords.innerHTML = "";
+        let singleWord = document.createElement('span');
+        singleWord.textContent += data.negative[i];
+        negativeWords.appendChild(singleWord);
+    }
+
+}
 
 function welcomeNewUser() {
     let name = prompt("Salut ça va ? C'est quoi ton nom ?", 'math');

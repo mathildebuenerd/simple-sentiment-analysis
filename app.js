@@ -16,41 +16,55 @@ let io = socket(server);
 
 app.use(express.static('public')); // quand l'user va sur le site il va voir ce qu'il y a dans le dossier public
 
-
-
-io.sockets.on('connection', newConnection);
-io.sockets.on('newSentence', updateTheScore);
-
-function updateTheScore() {
-
-    // find the the score of that sentence
-    // add it to the total score
-    // add the sentence to a file
-    // send the score to the client
-
-}
-
-function newConnection(socket) {
-    console.log(socket);
-    console.log('new connection');
-    socket.emit('new-connection', 'Il y a eu une nouvelle connection');
-}
-
-
 // The 'sentiment' package has more words, but the multilang allows other languages than english
 // So use 'sentiment' when it's english, and sentiment-multilang otherwise
-let sentiment = require('sentiment');
+// let sentiment = require('sentiment');
 let sentimentMultilang = require('sentiment-multilang'); // for sentiment analysis
 
 // Global Settings
-let lang = 'en';
+let lang = 'fr';
 
-let textContent = '';
-let textToAnalyze = "Neighbors said patrol cars were regularly in his mother’s driveway. More recently, Mr. Cruz, 19, had been expelled from his high school. He posted pictures of weapons and dead animals on social media.";
+io.sockets.on('connection', newConnection);
+// io.sockets.on('newSentence', updateTheScore);
 
-let score = sentiment(textToAnalyze);
+
+function newConnection(socket) {
+    // console.log(socket);
+    console.log('new connection');
+    socket.emit('new-connection', 'Il y a eu une nouvelle connection');
+
+    socket.on('newSentence', (data) => {
+        updateTheScore(socket, data);
+    });
+
+    function updateTheScore(socket, data) {
+
+        console.log("update data");
+        // console.log(data);
+
+        let score = sentimentMultilang(data.sentence, lang);
+        console.log('score');
+        console.log(score);
+        socket.emit('score', score);
+
+        // find the the score of that sentence
+        // add it to the total score
+        // add the sentence to a file
+// send the score to the client
+
+
+    }
+
+}
+
+
+
+// let textContent = '';
+// let textToAnalyze = "Neighbors said patrol cars were regularly in his mother’s driveway. More recently, Mr. Cruz, 19, had been expelled from his high school. He posted pictures of weapons and dead animals on social media.";
+
+// let score = sentiment(textToAnalyze);
 // let score = sentimentMultilang(textToAnalyze, lang);
-console.log(score.score);
+// console.log(score.score);
 
 
 
