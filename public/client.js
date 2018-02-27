@@ -9,12 +9,20 @@ let userInfos = '';
 socket.on('new-connection', welcomeNewUser);
 socket.on('score', displayScore);
 
+
+
+
+
+
 function displayScore(data) {
-    console.log(data);
+    // console.log('data');
+    // console.log(data);
     let scoreBlock = document.querySelector('#score');
     let voteBlock = document.querySelector('#vote');
     let positiveWords = document.querySelector('#positive');
     let negativeWords = document.querySelector('#negative');
+
+    sentences.push({score:data.score, vote:data.vote, positiveWords:data.positive, negativeWords:data.negative});
 
     // Display the score
     scoreBlock.textContent = data.score;
@@ -84,11 +92,13 @@ if ('webkitSpeechRecognition' in window) {
             sentence+=event.results[i][0].transcript + ' ';
         }
 
+
         console.log(sentence);
 
         // when we have 10 words, we send it to the server and restart the recording
         if ((sentence.split(' ')).length > 10) {
             socket.emit('newSentence', {sentence: sentence}); // on envoie un message de type 'newsentence, avec la sentence en contenu
+            sentences.push({sentence:sentence});
             restartRecording();
         }
 
