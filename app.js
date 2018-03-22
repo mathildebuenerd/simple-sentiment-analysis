@@ -2,6 +2,9 @@
  * Created by mathi on 16/02/2018.
  */
 
+
+let cool = require('cool-ascii-faces'); // for updating heroku when there're local changes
+
 // Set-up the server
 let express = require('express');
 let app = express();
@@ -13,6 +16,11 @@ let fs = require('fs'); // pour gérer les fichiers
 // Met en place le socket
 let socket = require('socket.io');
 let io = socket(server);
+
+// for updating heroku when there're local changes
+app.get('/cool', function(request, response) {
+    response.send(cool());
+});
 
 app.use(express.static('public')); // quand l'user va sur le site il va voir ce qu'il y a dans le dossier public
 

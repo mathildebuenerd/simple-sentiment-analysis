@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/mathildebuenerd/simple-sentiment-analysis#readme",
   "dependencies": {
+    "cool-ascii-faces": "1.3.4",
     "express": "^4.16.2",
     "nodemon": "^1.15.0",
     "sentiment": "^4.2.0",
