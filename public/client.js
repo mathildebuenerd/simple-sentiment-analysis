@@ -15,14 +15,16 @@ socket.on('score', displayScore);
 
 
 function displayScore(data) {
-    // console.log('data');
+    // console.log('test');
     // console.log(data);
+
+     // console.log(data.sentence);
     let scoreBlock = document.querySelector('#score');
     let voteBlock = document.querySelector('#vote');
     let positiveWords = document.querySelector('#positive');
     let negativeWords = document.querySelector('#negative');
 
-    sentences.push({score:data.score, vote:data.vote, positiveWords:data.positive, negativeWords:data.negative});
+    sentences.push({score:data.score, vote:data.vote, positiveWords:data.positive, negativeWords:data.negative, tokens:data.tokens});
 
     // Display the score
     scoreBlock.textContent = data.score;
@@ -98,7 +100,7 @@ if ('webkitSpeechRecognition' in window) {
         // when we have 10 words, we send it to the server and restart the recording
         if ((sentence.split(' ')).length > 10) {
             socket.emit('newSentence', {sentence: sentence}); // on envoie un message de type 'newsentence, avec la sentence en contenu
-            sentences.push({sentence:sentence});
+            // sentences.push({sentence:sentence});
             restartRecording();
         }
 
