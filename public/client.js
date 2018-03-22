@@ -68,6 +68,8 @@ recognition.lang = "fr-FR";
 recognition.continuous = true;
 recognition.interimResults = true;
 
+let sentenceBlock = document.querySelector('#sentence');
+
 // What I do is :
 // - Here I listen to the speech
 // - When I have enough words (10), I stop the recognition and put those words into the sentence variable
@@ -94,7 +96,7 @@ if ('webkitSpeechRecognition' in window) {
             sentence+=event.results[i][0].transcript + ' ';
         }
 
-
+        sentenceBlock.textContent = sentence;
         console.log(sentence);
 
         // when we have 10 words, we send it to the server and restart the recording

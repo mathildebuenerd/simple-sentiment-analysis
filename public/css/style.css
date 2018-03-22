@@ -1,3 +1,24 @@
+html {
+    font-family: sans-serif;
+}
+
+header p {
+    width: 90vw;
+    margin: 20px auto;
+    text-align: center;
+    font-weight: 700;
+}
+
+header span {
+    color: #f0f;
+}
+
+#stats span {
+    font-weight: 700;
+}
+
+
+
 #positive, #negative {
     display: flex;
     flex-direction: column;
